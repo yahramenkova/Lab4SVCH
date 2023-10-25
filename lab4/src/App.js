@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Header from './Components/header';
+import MovieSearch from './Components/movieSearch';
+import './App.css';
 
 
 class App extends Component {
@@ -7,7 +9,7 @@ class App extends Component {
     return (
       <div className="App">
         <Header></Header> 
-        
+        <MovieSearch></MovieSearch>
       </div>
     );
   }

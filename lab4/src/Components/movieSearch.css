@@ -1,0 +1,68 @@
+/* Общие стили */
+
+.searchBox{
+margin-top: 30px;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+input {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding-right: 30px; /* Оставьте место для крестика справа */
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #011329;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.inputContainer {
+    position: relative;
+  }
+  
+  
+  .clear {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #999; /* Цвет крестика */
+  }
+  
+  .clear:hover {
+    color: #333; /* Измените цвет при наведении */
+  }
+  
+  
+.clear {
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+/* Медиа-запрос для отзывчивой верстки */
+@media (max-width: 600px) {
+  div {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  input {
+    width: 100%;
+  }
+
+  button {
+    margin-top: 10px;
+  }
+}
