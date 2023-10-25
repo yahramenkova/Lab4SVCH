@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import "./movieList.css"
 
 class MovieList extends Component {
   constructor() {
@@ -28,16 +29,16 @@ class MovieList extends Component {
     const { movies } = this.state;
 
     return (
-      <div>
-        <ul>
+      <div class="listFilm">
+        
           {movies.map(movie => (
-            <li key={movie.imdbID}>
+            <div key={movie.imdbID} className="movie-item">
               <img src={movie.Poster} alt={movie.Title} />
               <h3>{movie.Title} {movie.Rated}</h3>
               <h4>Year: {movie.Year}</h4>
-            </li>
+            </div>
           ))}
-        </ul>
+        
       </div>
     );
   }

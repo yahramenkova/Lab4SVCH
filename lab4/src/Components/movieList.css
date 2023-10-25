@@ -1,0 +1,23 @@
+.listFilm{
+display: grid;
+grid-template-columns: repeat(3, 1fr); /* Задайте количество колонок, которые вам нужны */
+gap: 20px; /* Расстояние между элементами сетки */
+padding: 30px;
+}
+.movie-item{
+    text-align: center;
+}
+.movie-item img {
+    max-width: 100%;
+}
+.movie-item h3 {
+    font-size: 1.2rem; /* Размер шрифта для заголовка */
+    margin: 10px 0; /* Внешние отступы для заголовка */
+    color:rgb(255, 255, 255);
+  }
+  
+  .movie-item h4 {
+    font-size: 1rem; /* Размер шрифта для года выпуска */
+    color: #888; /* Цвет текста для года выпуска */
+  }
+  
