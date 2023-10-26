@@ -1,16 +1,23 @@
 import React, { Component } from 'react';
-import "./movieList.css"
+import "./movieList.css";
 
 class MovieList extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       movies: [],
     };
   }
 
   async componentDidMount() {
-    const { searchTerm, apiKey } = this.props;
+    const { searchTerm } = this.props;
+    const apiKey = '92df97a'; // Замените на свой действительный API-ключ
+
+    if (searchTerm.trim() === '') {
+      // Handle the case where searchTerm is empty
+      return;
+    }
+
     const URL = `https://www.omdbapi.com/?s=${searchTerm}&apikey=${apiKey}`;
 
     try {
@@ -29,16 +36,14 @@ class MovieList extends Component {
     const { movies } = this.state;
 
     return (
-      <div class="listFilm">
-        
-          {movies.map(movie => (
-            <div key={movie.imdbID} className="movie-item">
-              <img src={movie.Poster} alt={movie.Title} />
-              <h3>{movie.Title} {movie.Rated}</h3>
-              <h4>Year: {movie.Year}</h4>
-            </div>
-          ))}
-        
+      <div className="listFilm">
+        {movies.map((movie) => (
+          <div key={movie.imdbID} className="movie-item">
+            <img src={movie.Poster} alt={movie.Title} />
+            <h3>{movie.Title} {movie.Rated}</h3>
+            <h4>Year: {movie.Year}</h4>
+          </div>
+        ))}
       </div>
     );
   }

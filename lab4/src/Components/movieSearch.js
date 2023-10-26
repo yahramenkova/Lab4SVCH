@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-import './movieSearch.css';
+import "./movieSearch.css";
+import MovieList from './movieList';
 
 class MovieSearch extends Component {
   constructor() {
     super();
     this.state = {
-      searchTerm: ''
+      searchTerm: '', // Поисковый запрос
+      searchResults: [],
+      error: null,
+      loading: false,
     };
   }
 
@@ -13,36 +17,62 @@ class MovieSearch extends Component {
     this.setState({ searchTerm: event.target.value });
   }
 
-  handleSearch = () => {
-    // В этом методе вы можете выполнять поиск фильмов, используя значение this.state.searchTerm
-    // Например, вы можете отправить запрос к API и обновить состояние компонента с результатами поиска
-    // В данном примере, мы просто выведем поисковый запрос в консоль
-    console.log('Searching for:', this.state.searchTerm);
+  handleClearSearch = () => {
+    this.setState({ searchTerm: '', searchResults: [], error: null });
   }
 
-  handleClear = () => {
-    this.setState({ searchTerm: '' });
+  // Функция для загрузки фильмов
+  loadMovies = async () => {
+    const { searchTerm } = this.state;
+
+    if (searchTerm.trim() === '') {
+      this.setState({ error: 'Please enter a search term' });
+      return;
+    }
+
+    this.setState({ loading: true });
+
+    try {
+      const apiKey = '92df97a'; // Замените на свой действительный API-ключ
+      const URL = `https://www.omdbapi.com/?s=${searchTerm}&apikey=${apiKey}`;
+      const response = await fetch(URL);
+
+      if (!response.ok) {
+        throw new Error('Error loading movies');
+      }
+
+      const data = await response.json();
+      this.setState({ searchResults: data.Search, error: null });
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      this.setState({ searchResults: [], error: 'Error fetching data' });
+    } finally {
+      this.setState({ loading: false });
+    }
+  }
+
+  handleSearch = () => {
+    this.loadMovies();
   }
 
   render() {
-    const hasText = this.state.searchTerm !== '';
+    const { searchTerm, searchResults, error, loading } = this.state;
 
     return (
-      <div className="searchBox">
-        <div className={`inputContainer ${hasText ? 'withText' : ''}`}>
-          <input
-            type="text"
-            value={this.state.searchTerm}
-            onChange={this.handleSearchTermChange}
-            placeholder="Enter a name..."
-          />
-          {hasText && (
-            <span className="clear" onClick={this.handleClear}>
-              &#10005;
-            </span>
-          )}
-        </div>
-        <button onClick={this.handleSearch}>Search</button>
+      <div className='searchBox'>
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={this.handleSearchTermChange}
+          placeholder="Enter a movie name..."
+        />
+        <button onClick={this.handleSearch} disabled={loading}>
+          Search
+        </button>
+        <button onClick={this.handleClearSearch}></button>
+        {loading && <p>Loading...</p>}
+        {error && <p>{error}</p>}
+        {searchResults.length > 0 ? <MovieList searchTerm={searchTerm} /> : null}
       </div>
     );
   }
