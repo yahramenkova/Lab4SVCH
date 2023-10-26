@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import "./movieSearch.css";
 import MovieList from './movieList';
+import ClearSearch from './clear';
 
 class MovieSearch extends Component {
   constructor() {
@@ -50,26 +51,41 @@ class MovieSearch extends Component {
   handleSearch = () => {
     this.loadMovies();
   }
+  
+  handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      this.handleSearch();
+    }
+  }
+
+  handleClearSearch = () => {
+    this.setState({ searchTerm: '', searchResults: [] });
+  }
 
   render() {
     const { searchTerm, searchResults, error, loading } = this.state;
 
     return (
       <div>
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={this.handleSearchTermChange}
-          placeholder="Enter a movie name..."
-        />
+        <div className={`inputContainer ${searchTerm ? 'withText' : ''}`}>
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={this.handleSearchTermChange}
+            onKeyDown={this.handleKeyPress}
+            placeholder="Enter a movie name..."
+          />
+          {searchTerm && <ClearSearch className="clear" onClear={this.handleClearSearch} />}
         <button onClick={this.handleSearch} disabled={loading}>
           Search
         </button>
+        </div>
         {loading && <p>Loading...</p>}
         {error && <p>{error}</p>}
         {searchResults.length > 0 && <MovieList searchTerm={searchTerm} />}
       </div>
     );
+    
   }
 }
 

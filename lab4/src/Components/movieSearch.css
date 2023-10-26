@@ -34,7 +34,7 @@ button {
   
   
   .clear {
-    position: absolute;
+    position: relative;
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
@@ -50,8 +50,9 @@ button {
 .clear {
   font-size: 20px;
   cursor: pointer;
-  margin-left: 10px;
+  margin-left: -20px;
 }
+/* Add this style to your CSS */
 
 /* Медиа-запрос для отзывчивой верстки */
 @media (max-width: 600px) {
