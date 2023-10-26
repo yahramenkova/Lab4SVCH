@@ -17,10 +17,6 @@ class MovieSearch extends Component {
     this.setState({ searchTerm: event.target.value });
   }
 
-  handleClearSearch = () => {
-    this.setState({ searchTerm: '', searchResults: [], error: null });
-  }
-
   // Функция для загрузки фильмов
   loadMovies = async () => {
     const { searchTerm } = this.state;
@@ -59,7 +55,7 @@ class MovieSearch extends Component {
     const { searchTerm, searchResults, error, loading } = this.state;
 
     return (
-      <div className='searchBox'>
+      <div>
         <input
           type="text"
           value={searchTerm}
@@ -69,10 +65,9 @@ class MovieSearch extends Component {
         <button onClick={this.handleSearch} disabled={loading}>
           Search
         </button>
-        <button onClick={this.handleClearSearch}></button>
         {loading && <p>Loading...</p>}
         {error && <p>{error}</p>}
-        {searchResults.length > 0 ? <MovieList searchTerm={searchTerm} /> : null}
+        {searchResults.length > 0 && <MovieList searchTerm={searchTerm} />}
       </div>
     );
   }
